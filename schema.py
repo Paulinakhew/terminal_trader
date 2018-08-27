@@ -35,6 +35,22 @@ cursor.execute(
     );"""
 )
 
+cursor.execute(
+    """CREATE TABLE leaderboard(
+        pk INTEGER PRIMARY KEY AUTOINCREMENT,
+        username VARCHAR,
+        p_and_l FLOAT,
+        FOREIGN KEY (username) REFERENCES user(username)
+    );"""
+)
+
+cursor.execute(
+    """CREATE TABLE current_user(
+        pk INTEGER PRIMARY KEY AUTOINCREMENT,
+        username VARCHAR
+    );"""
+)
+
 cursor.close()
 connection.close()
 

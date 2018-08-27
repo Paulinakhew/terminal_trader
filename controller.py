@@ -26,9 +26,9 @@ def game_loop():
         log_in = ['l','login']
         create_ = ['c','create']
         exit_ = ['e','exit']
-        accept_input = log_in     \
-                      +create_     \
-                      +exit_
+        accept_input = log_in    \
+                    +create_     \
+                    +exit_
         if user_choice in accept_input:
             if user_choice in log_in:
                 (user_name, password) = view.log_menu()
@@ -42,8 +42,10 @@ def game_loop():
                     time.sleep(3)
             elif user_choice in exit_:
                 condition = False
-                break
+                m.log_out()
                 os.system('clear')
+                break
+
             elif user_choice in create_:
                 #(new_user,new_password,new_funds) = view.create_menu()
          #       new_user = input("username:")
@@ -126,9 +128,13 @@ def game_loop():
                 pass
         else:
             pass
-        model.updateHoldings()
+        model.update_holdings()
         import time
         time.sleep(3)
+
+
+
+
 
 if __name__ == '__main__':
     game_loop()
