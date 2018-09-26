@@ -9,12 +9,7 @@ def log_or_sign():
     os.system('figlet Terminal Trader | lolcat -a -d 2')
     print('[l] Log in\n[c] Create a new account\n[e] Exit\n')
     return input(">MAIN> ")
-#    answer = input("Welcome.Do you already have a userid?\n[y] Yes\n[n] No\n")
-#    yes= ['y', 'yes']
-#    no= ['n', 'no']
-#    if answer in yes:
-#        userid = input("What is your userid?\n")
-#        password = input("What is your password?\n")
+
 def log_menu():
     head()
     username = input("What is your username?\n")
@@ -33,8 +28,6 @@ def head():
 #    os.system('cowsay -d "$(fortune) \n Terminal Trader"\n')
 #    os.system('fortune -a | fmt -80 -s | $(shuf -n 1 -e cowsay cowthink) -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay
 #-l | tail -n +2)) -n')
-
-
 #    os.system('cowsay -f vader "$(fortune) \n Terminal Trader"\n')
 #    os.system('"$(fortune) \n " "Terminal Trader"\n cowsay | lolcat')
     os.system('cowsay -f vader "Terminal Trader\n" | lolcat')
@@ -55,11 +48,13 @@ def buy_menu():
 
 def lookup_menu():
     head()
+    print("Input the name of the company that you would like to find the ticker symbol for. ")
     return input('>MAIN>LOOKUP> ')
 
 
 def quote_menu():
     head()
+    print("Input the ticker symbol of the stock that you would like a quote for. ")
     return input('>MAIN>QUOTE> ')
 
 def sell_menu():

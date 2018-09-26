@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 
-import model
+import model as m
+import model as model
 import view
 import time
 import os
 import sqlite3
-#the model is the biz logic
-#controller is the router
-#view is user interface
-#run.sh is an alternative to controller.py
-
+#TODO: break upon typing any key
 
 
 #for game servers, you want an infinite loop or else it will crash
@@ -47,11 +44,6 @@ def game_loop():
                 break
 
             elif user_choice in create_:
-                #(new_user,new_password,new_funds) = view.create_menu()
-         #       new_user = input("username:")
-         #       new_password = input("password:")
-         #       new_funds = input('fund:')
-         #       newer_funds = float(new_funds)
                 (new_user,new_password,new_funds) = view.create_menu()
                 newuser = new_user,new_password,new_funds
                 cursor.execute(
@@ -69,7 +61,6 @@ def game_loop():
                 print("You have signed up!")
                 import time
                 time.sleep(3)
-
     while condition:
         buy_inputs = ['b', 'buy']
         sell_inputs = ['s', 'sell']
@@ -92,6 +83,7 @@ def game_loop():
                     choice = input("You have enough money. Would you like to buy this stock?\n[y] Yes\n[n] No\n")
                     if choice in yes:
                         model.buy_db(return_list)
+                        print("You have bought {} shares of {}. ".format(trade_volume, ticker_symbol))
                     else:
                         print("Returning to main menu.")
                 else:
@@ -104,7 +96,8 @@ def game_loop():
                     no = ['n', 'no']
                     choice = input("You have enough shares to sell. Would you like to sell this stock?\n[y] Yes\n[n] No\n")
                     if choice.lower() in yes:
-                        model.sell_db(return_list)#TODO
+                        model.sell_db(return_list)
+                        print("You have sold {} shares of {}. ".format(trade_volume, ticker_symbol))
                     else:
                         print("Returning to main menu.")
                 else:
@@ -125,13 +118,12 @@ def game_loop():
             else:
                 #catches huge error
                 #should contain a fallback function
-                pass
+                print("Error.")
         else:
-            pass
+            print("Error.")
         model.update_holdings()
         import time
         time.sleep(3)
-
 
 
 if __name__ == '__main__':

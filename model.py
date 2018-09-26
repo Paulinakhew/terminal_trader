@@ -415,10 +415,4 @@ def log_out():
 
 
 if __name__ == '__main__':
-    # print(lookup_ticker_symbol("tesla"))
-    # print(find_quote("tesla"))
-    # print(lookup_ticker_symbol('asdfajHLSKDJHFA')) #FIXME This is the code that isn't passing
-#    print(calculate_p_and_l('John'))
-#    leaderboard()
-#    update_leaderboard()
     pass
