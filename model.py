@@ -20,10 +20,8 @@ def log_in(user_name,password):
     cursor.execute(query)
     result_tuple = cursor.fetchone()
     if result_tuple[0] == 0:
-#        print('false')
         return False
     elif result_tuple[0] == 1:
-#        print('true')
         cursor.execute("""
             UPDATE current_user SET username = '{}' WHERE pk = 1;""".format(user_name))
         connection.commit()
@@ -52,7 +50,6 @@ def create_(new_user,new_password,new_fund):
     connection.close()
 
 def update_holdings():
-    #username = current_user()
     connection = sqlite3.connect('trade_information.db', check_same_thread=False)
     cursor = connection.cursor()
     query = 'DELETE FROM holdings WHERE num_shares = 0.0'
@@ -78,7 +75,6 @@ def sell(username, ticker_symbol, trade_volume):
         current_number_shares = 0
     else:
         current_number_shares = fetch_result[1]
-
     last_price = float(quote_last_price(ticker_symbol))
     brokerage_fee = 6.95 #TODO un-hardcode this value
     current_balance = get_user_balance(username) #TODO un-hardcode this value
@@ -90,7 +86,6 @@ def sell(username, ticker_symbol, trade_volume):
     agg_balance = float(current_balance) + float(transaction_revenue)
     print("\nExpected user balance after transaction:", agg_balance)
     return_list = (last_price, brokerage_fee, current_balance, trade_volume,agg_balance,username,ticker_symbol,current_number_shares)
-
     if current_number_shares >= trade_volume:
         return True, return_list #success
     else:
@@ -111,11 +106,9 @@ def sell_db(return_list):
     current_balance = return_list[2]
     trade_volume = return_list[3]
     agg_balance = return_list[4]
-#    username = return_list[5]
     username = current_user()
     ticker_symbol = return_list[6]
     current_number_shares = return_list[7]
-
     #user
     cursor.execute("""
         UPDATE user
@@ -262,25 +255,26 @@ def lookup_ticker_symbol(company_name):
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
     cursor = connection.cursor()
     database = 'trade_information.db'
-    endpoint = 'http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input='+company_name
-    #FIXME The following return statement assumes that only one
-    #ticker symbol will be matched with the user's input.
-    #FIXME There also isn't any error handling.
-    return json.loads(requests.get(endpoint).text)[0]['Symbol']
+    try:
+        endpoint = 'http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input='+company_name
+        return json.loads(requests.get(endpoint).text)[0]['Symbol']
+    except:
+        return "The ticker symbol for the company you searched cannot be found. \nPlease try again."
 
 def quote_last_price(ticker_symbol):
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
     cursor = connection.cursor()
-
-    endpoint = 'http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol='+ticker_symbol
-    return json.loads(requests.get(endpoint).text)['LastPrice']
+    try:
+        endpoint = 'http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol='+ticker_symbol
+        return json.loads(requests.get(endpoint).text)['LastPrice']
+    except:
+        return "The last price for the company you searched cannot be found. \nPlease try again."
 
 def calculate_p_and_l():
     username = current_user()
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
     cursor = connection.cursor()
     database = 'trade_information.db'
-
     #getting all ticker symbols for current user
     all_ticker_symbols = 'SELECT ticker_symbol FROM holdings WHERE username = "{}"'.format(username)
     cursor.execute(all_ticker_symbols)
