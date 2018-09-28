@@ -146,26 +146,28 @@ def buy(username, ticker_symbol, trade_volume):
     cursor = connection.cursor()
     #we need to return True or False for the confirmation message
     trade_volume = float(trade_volume)
-    last_price = float(quote_last_price(ticker_symbol))
-    brokerage_fee = 6.95 #TODO un-hardcode this value
-    username = current_user()
-#    print(username)
-    current_balance = get_user_balance(username)
-    #TODO un-hardcode this value
-    print("last price", last_price)
-    print("brokerage fee", brokerage_fee)
-    print("current balance", current_balance)
-    transaction_cost = (trade_volume * last_price) + brokerage_fee
-    print("transaction", transaction_cost)
-    print("current bal", current_balance)
-    print("Total cost of Transaction:", transaction_cost)
-    left_over = float(current_balance) - float(transaction_cost)
-    print("\nExpected user balance after transaction:", left_over)
-    return_list = (last_price, brokerage_fee, current_balance, trade_volume,left_over,username,ticker_symbol)
-    if transaction_cost <= current_balance:
-        return True, return_list #success
-    else:
-        return False, return_list
+    try:
+        last_price = float(quote_last_price(ticker_symbol))
+        brokerage_fee = 6.95 #TODO un-hardcode this value
+        username = current_user()
+    #    print(username)
+        current_balance = get_user_balance(username)
+        print("last price", last_price)
+        print("brokerage fee", brokerage_fee)
+        print("current balance", current_balance)
+        transaction_cost = (trade_volume * last_price) + brokerage_fee
+        print("transaction", transaction_cost)
+        print("current bal", current_balance)
+        print("Total cost of Transaction:", transaction_cost)
+        left_over = float(current_balance) - float(transaction_cost)
+        print("\nExpected user balance after transaction:", left_over)
+        return_list = (last_price, brokerage_fee, current_balance, trade_volume,left_over,username,ticker_symbol)
+        if transaction_cost <= current_balance:
+            return True, return_list #success
+        else:
+            return False, return_list
+    except:
+        return False
     #if yes return new balance = current balance - transaction cost
 
 def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_balance, trade_volume, left_over, username, ticker_symbol)
@@ -182,7 +184,6 @@ def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_bal
     left_over = return_list[4]
     username = return_list[5]
     ticker_symbol = return_list[6]
-
     #update users(current_balance), stocks, holdings.
     #users
         #updating the balance of the user
