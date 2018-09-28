@@ -5,6 +5,9 @@ import sqlite3
 import requests
 import pandas as pd
 
+
+#TODO: fix the code for when you input a wrong ticker symbol for buying and selling
+
 def current_user():
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
     cursor = connection.cursor()
@@ -59,11 +62,6 @@ def update_holdings():
     connection.close()
 
 def sell(username, ticker_symbol, trade_volume):
-    #we have to search for how many of the stock we have
-    #compare trade volume with how much stock we have
-    #if trade_volume <= our stock, proceed
-    #else return to menu
-    #we need a database to save how much money we have and how much stock
     username = current_user()
     database = 'trade_information.db'
     connection = sqlite3.connect(database, check_same_thread=False)
@@ -93,11 +91,6 @@ def sell(username, ticker_symbol, trade_volume):
     #if yes return new balance = current balance - transaction cost
 
 def sell_db(return_list):
-# return_list = (last_price, brokerage_fee, current_balance, trade_volume, agg_balance, username, ticker_symbol, current_number_shares)
-    #check if user holds enough stock
-    #update user's balance
-    #insert transaction
-    #if user sold all stocks holdings row should be deleted not set to 0
     database = 'trade_information.db'
     connection = sqlite3.connect(database,check_same_thread = False)
     cursor = connection.cursor()
@@ -127,8 +120,6 @@ def sell_db(return_list):
         '{}',{},'{}',{}
         );""".format(ticker_symbol,trade_volume*-1,username,last_price)
     )
-    #holdings
-    #at this point, it it assumed that the user has enough shares to sell.
     if current_number_shares >= trade_volume: #if user isn't selling all shares of a specific company
         tot_shares = float(current_number_shares)-float(trade_volume)
         cursor.execute('''
@@ -150,7 +141,6 @@ def buy(username, ticker_symbol, trade_volume):
         last_price = float(quote_last_price(ticker_symbol))
         brokerage_fee = 6.95 #TODO un-hardcode this value
         username = current_user()
-    #    print(username)
         current_balance = get_user_balance(username)
         print("last price", last_price)
         print("brokerage fee", brokerage_fee)
@@ -182,7 +172,6 @@ def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_bal
     current_balance = return_list[2]
     trade_volume = return_list[3]
     left_over = return_list[4]
-    username = return_list[5]
     ticker_symbol = return_list[6]
     #update users(current_balance), stocks, holdings.
     #users
@@ -205,8 +194,6 @@ def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_bal
         );""".format(ticker_symbol,trade_volume,username,last_price)
     )
 
-        #inserting information
-    #holdings
     query = 'SELECT count(*), num_shares FROM holdings WHERE username = "{}" AND ticker_symbol = "{}"'.format(username, ticker_symbol)
     cursor.execute(query)
     fetch_result = cursor.fetchone()
@@ -407,7 +394,6 @@ def log_out():
         connection.close()
     except:
         print('connection already closed')
-
 
 if __name__ == '__main__':
     pass
