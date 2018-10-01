@@ -5,7 +5,6 @@ import sqlite3
 import requests
 import pandas as pd
 
-
 #TODO: fix the code for when you input a wrong ticker symbol for buying and selling
 
 def current_user():
@@ -102,14 +101,12 @@ def sell_db(return_list):
     username = current_user()
     ticker_symbol = return_list[6]
     current_number_shares = return_list[7]
-    #user
     cursor.execute("""
         UPDATE user
         SET current_balance = {}
         WHERE username = '{}';
     """.format(agg_balance, username)
     )
-    #transactions
     cursor.execute("""
         INSERT INTO transactions(
         ticker_symbol,
@@ -193,7 +190,6 @@ def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_bal
         '{}',{},'{}',{}
         );""".format(ticker_symbol,trade_volume,username,last_price)
     )
-
     query = 'SELECT count(*), num_shares FROM holdings WHERE username = "{}" AND ticker_symbol = "{}"'.format(username, ticker_symbol)
     cursor.execute(query)
     fetch_result = cursor.fetchone()
@@ -273,25 +269,19 @@ def calculate_p_and_l():
         stock_transactions = 'SELECT * FROM transactions WHERE owner_username = "{}" and ticker_symbol = "{}"'.format(username, symbol)
         cursor.execute(stock_transactions)
         transactions = cursor.fetchall()
-#        print(username,symbol)
         total_shares = 0
         price = 0
-#        print(f' transactions{transactions}')
-# do this instead
 # SELECT sum(num_shares*last_price) from transactions where owner_username = 'John' AND ticker_symbol = 'x';
         for transaction in transactions:
             ticker_symbol = transaction[1]
             trade_volume = transaction[2]
             username = transaction[3]
             last_price = transaction[4]
-
             shares = 'SELECT num_shares FROM holdings WHERE username = "{}" AND ticker_symbol = "{}"'.format(username, symbol)
             cursor.execute(shares)
             nshares = cursor.fetchall()
             num_shares = [float(num[0]) for num in list(nshares)]
-
             total_shares += sum(num_shares)
-
             for shares in num_shares:
                 purchased_price = 'SELECT last_price FROM transactions WHERE owner_username = "{}" AND ticker_symbol = "{}" AND num_shares = {}'.format(username, symbol, shares)
                 cursor.execute(purchased_price)
@@ -300,7 +290,6 @@ def calculate_p_and_l():
                 price += shares * purchase_price
     p_and_l += price/total_shares
     return p_and_l
-
 
 def display_user_holdings():
     username=current_user()
