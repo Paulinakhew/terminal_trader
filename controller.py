@@ -102,22 +102,18 @@ def game_loop():
                         print("Returning to main menu.")
                 else:
                     print("You do not have enough shares to sell.")
-
             elif user_input in lookup_inputs:
                 company_name = view.lookup_menu()
-                print(model.lookup_ticker_symbol(company_name))
+                ticker_symbol = model.lookup_ticker_symbol(company_name)
+                print("The ticker symbol for {} is {}.".format(company_name, ticker_symbol))
             elif user_input in quote_inputs:
-                #TODO
                 ticker_symbol = view.quote_menu()
-                print(model.quote_last_price(ticker_symbol))
-                #import time
-                #time.sleep(5)
+                last_price = model.quote_last_price(ticker_symbol)
+                print("The last price for {} is ${}.".format(ticker_symbol, last_price))
             elif user_input in exit_inputs:
                 os.system('clear')
                 break
             else:
-                #catches huge error
-                #should contain a fallback function
                 print("Error.")
         else:
             print("Error.")
