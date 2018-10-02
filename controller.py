@@ -7,8 +7,6 @@ import time
 import os
 import sqlite3
 #TODO: break upon typing any key
-
-
 #for game servers, you want an infinite loop or else it will crash
 
 connection = sqlite3.connect('trade_information.db',check_same_thread=False)
@@ -42,7 +40,6 @@ def game_loop():
                 m.log_out()
                 os.system('clear')
                 break
-
             elif user_choice in create_:
                 (new_user,new_password,new_funds) = view.create_menu()
                 newuser = new_user,new_password,new_funds
@@ -57,7 +54,6 @@ def game_loop():
                 connection.commit()
                 cursor.close()
                 connection.close()
-
                 print("You have signed up!")
                 import time
                 time.sleep(3)
@@ -105,11 +101,17 @@ def game_loop():
             elif user_input in lookup_inputs:
                 company_name = view.lookup_menu()
                 ticker_symbol = model.lookup_ticker_symbol(company_name)
-                print("The ticker symbol for {} is {}.".format(company_name, ticker_symbol))
+                if len(ticker_symbol) <=6: 
+                    print("The ticker symbol for {} is {}.".format(company_name, ticker_symbol))
+                else:
+                    print("The ticker symbol for the company you searched cannot be found. \nPlease try again.")
             elif user_input in quote_inputs:
                 ticker_symbol = view.quote_menu()
                 last_price = model.quote_last_price(ticker_symbol)
-                print("The last price for {} is ${}.".format(ticker_symbol, last_price))
+                if len(str(last_price)) <= 6:
+                    print("The last price for {} is ${}.".format(ticker_symbol, last_price))
+                else:
+                    print("The last price for the company you searched cannot be found. \nPlease try again.")
             elif user_input in exit_inputs:
                 os.system('clear')
                 break
