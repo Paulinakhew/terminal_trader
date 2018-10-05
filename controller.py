@@ -120,8 +120,9 @@ def game_loop():
         else:
             print("Error.")
         model.update_holdings()
-        import time
-        time.sleep(3)
+        #import time
+        #time.sleep(3)
+        input("\nPress enter to continue. ")
 
 
 if __name__ == '__main__':
