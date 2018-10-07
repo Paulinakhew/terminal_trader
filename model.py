@@ -5,7 +5,7 @@ import sqlite3
 import requests
 import pandas as pd
 
-#TODO: fix the code for when you input a wrong ticker symbol for buying and selling
+#TODO: create a function where you can see holdings and transactions
 
 def current_user():
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
@@ -14,6 +14,17 @@ def current_user():
     cursor.execute(query)
     username = cursor.fetchone()
     return username[0]
+
+def funds():
+    user_name = current_user()
+    connection = sqlite3.connect('trade_information.db', check_same_thread=False)
+    cursor= connection.cursor()
+    query = "SELECT current_balance FROM user where username='{}';".format(user_name)
+    cursor.execute(query)
+    result = cursor.fetchone()
+    return result[0]
+    cursor.close()
+    connection.close()
 
 def log_in(user_name,password):
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
@@ -87,7 +98,6 @@ def sell(username, ticker_symbol, trade_volume):
         return True, return_list #success
     else:
         return False, return_list
-    #if yes return new balance = current balance - transaction cost
 
 def sell_db(return_list):
     database = 'trade_information.db'
@@ -134,28 +144,24 @@ def buy(username, ticker_symbol, trade_volume):
     cursor = connection.cursor()
     #we need to return True or False for the confirmation message
     trade_volume = float(trade_volume)
-    try:
-        last_price = float(quote_last_price(ticker_symbol))
-        brokerage_fee = 6.95 #TODO un-hardcode this value
-        username = current_user()
-        current_balance = get_user_balance(username)
-        print("last price", last_price)
-        print("brokerage fee", brokerage_fee)
-        print("current balance", current_balance)
-        transaction_cost = (trade_volume * last_price) + brokerage_fee
-        print("transaction", transaction_cost)
-        print("current bal", current_balance)
-        print("Total cost of Transaction:", transaction_cost)
-        left_over = float(current_balance) - float(transaction_cost)
-        print("\nExpected user balance after transaction:", left_over)
-        return_list = (last_price, brokerage_fee, current_balance, trade_volume,left_over,username,ticker_symbol)
-        if transaction_cost <= current_balance:
-            return True, return_list #success
-        else:
-            return False, return_list
-    except:
-        return False
-    #if yes return new balance = current balance - transaction cost
+    last_price = float(quote_last_price(ticker_symbol))
+    brokerage_fee = 6.95 #TODO un-hardcode this value
+    username = current_user()
+    current_balance = get_user_balance(username)
+    print("last price", last_price)
+    print("brokerage fee", brokerage_fee)
+    print("current balance", current_balance)
+    transaction_cost = (trade_volume * last_price) + brokerage_fee
+    print("transaction", transaction_cost)
+    print("current bal", current_balance)
+    print("Total cost of Transaction:", transaction_cost)
+    left_over = float(current_balance) - float(transaction_cost)
+    print("\nExpected user balance after transaction:", left_over)
+    return_list = (last_price, brokerage_fee, current_balance, trade_volume,left_over,username,ticker_symbol)
+    if transaction_cost <= current_balance:
+        return True, return_list #success
+    else:
+        return False, return_list
 
 def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_balance, trade_volume, left_over, username, ticker_symbol)
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)

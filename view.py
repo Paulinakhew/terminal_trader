@@ -1,7 +1,6 @@
-    #!/usr/bin/env python3
+#!/usr/bin/env python3
 
 import os
-
 
 def log_or_sign():
     os.system('clear')
@@ -35,9 +34,8 @@ def head():
 
 def main_menu():
     head()
-    print('[b] Buy\n[s] Sell\n[l] Lookup\n[q] Quote\n[e] Exit\n')
+    print('[b] Buy\n[s] Sell\n[l] Lookup\n[q] Quote\n[f] Funds\n[e] Exit\n')
     return input(">MAIN> ")
-
 
 def buy_menu():
     head()
@@ -45,12 +43,10 @@ def buy_menu():
     y = float(input('Trade Volume: '))
     return x, y
 
-
 def lookup_menu():
     head()
     print("Input the name of the company that you would like to find the ticker symbol for. ")
     return input('>MAIN>LOOKUP> ')
-
 
 def quote_menu():
     head()

@@ -3,7 +3,6 @@
 import model as m
 import model as model
 import view
-import time
 import os
 import sqlite3
 #TODO: break upon typing any key
@@ -62,11 +61,13 @@ def game_loop():
         sell_inputs = ['s', 'sell']
         lookup_inputs = ['l', 'lookup']
         quote_inputs = ['q', 'quote']
+        funds = ['f', 'funds']
         exit_inputs = ['e', 'exit']
         acceptable_inputs = buy_inputs     \
                             +sell_inputs   \
                             +lookup_inputs \
                             +quote_inputs  \
+                            +funds \
                             +exit_inputs
         user_input = view.main_menu()
         if user_input in acceptable_inputs:
@@ -112,6 +113,9 @@ def game_loop():
                     print("The last price for {} is ${}.".format(ticker_symbol, last_price))
                 else:
                     print("The last price for the company you searched cannot be found. \nPlease try again.")
+            elif user_input in funds:
+                bal = model.funds()
+                print("Your current balance is ${}.".format(bal))
             elif user_input in exit_inputs:
                 os.system('clear')
                 break
@@ -120,8 +124,6 @@ def game_loop():
         else:
             print("Error.")
         model.update_holdings()
-        #import time
-        #time.sleep(3)
         input("\nPress enter to continue. ")
 
 
