@@ -34,7 +34,7 @@ def head():
 
 def main_menu():
     head()
-    print('[b] Buy\n[s] Sell\n[l] Lookup\n[q] Quote\n[f] Funds\n[e] Exit\n')
+    print('[b] Buy\n[s] Sell\n[l] Lookup\n[q] Quote\n[f] Funds\n[h] Holdings\n[e] Exit\n')
     return input(">MAIN> ")
 
 def buy_menu():

@@ -5,7 +5,7 @@ import sqlite3
 import requests
 import pandas as pd
 
-#TODO: create a function where you can see holdings and transactions
+#TODO: create a function where you can see holdings and transactiona
 
 def current_user():
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
@@ -14,6 +14,15 @@ def current_user():
     cursor.execute(query)
     username = cursor.fetchone()
     return username[0]
+
+def holdings():
+    username = current_user()
+    connection = sqlite3.connect('trade_information.db', check_same_thread=False)
+    cursor = connection.cursor()
+    query = "SELECT ticker_symbol, num_shares FROM holdings where username='{}'".format(username)
+    cursor.execute(query)
+    holdings = cursor.fetchall()
+    return holdings
 
 def funds():
     user_name = current_user()

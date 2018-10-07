@@ -62,12 +62,14 @@ def game_loop():
         lookup_inputs = ['l', 'lookup']
         quote_inputs = ['q', 'quote']
         funds = ['f', 'funds']
+        holdings = ['h', 'holdings']
         exit_inputs = ['e', 'exit']
         acceptable_inputs = buy_inputs     \
                             +sell_inputs   \
                             +lookup_inputs \
                             +quote_inputs  \
-                            +funds \
+                            +funds         \
+                            +holdings      \
                             +exit_inputs
         user_input = view.main_menu()
         if user_input in acceptable_inputs:
@@ -116,6 +118,9 @@ def game_loop():
             elif user_input in funds:
                 bal = model.funds()
                 print("Your current balance is ${}.".format(bal))
+            elif user_input in holdings:
+                holdings = m.holdings()
+                print("Your current holdings: \n{}".format(holdings))
             elif user_input in exit_inputs:
                 os.system('clear')
                 break
