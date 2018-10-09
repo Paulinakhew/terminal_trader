@@ -116,13 +116,15 @@ def game_loop():
                 else:
                     print("The last price for the company you searched cannot be found. \nPlease try again.")
             elif user_input in funds:
+                view.clear_screen()
                 bal = model.funds()
                 print("Your current balance is ${}.".format(bal))
             elif user_input in holdings:
+                view.clear_screen()
                 holdings = m.holdings()
                 print("Your current holdings: \n{}".format(holdings))
             elif user_input in exit_inputs:
-                os.system('clear')
+                view.clear_screen()
                 break
             else:
                 print("Error.")
