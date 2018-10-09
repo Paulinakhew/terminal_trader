@@ -4,6 +4,7 @@ import json
 import sqlite3
 import requests
 import pandas as pd
+import view
 
 #TODO: create a function where you can see holdings and transactiona
 
@@ -52,8 +53,7 @@ def log_in(user_name,password):
     if result_tuple[0] == 0:
         return False
     elif result_tuple[0] == 1:
-        cursor.execute("""
-            UPDATE current_user SET username = '{}' WHERE pk = 1;""".format(user_name))
+        cursor.execute("UPDATE current_user SET username = '{}' WHERE pk = 1;".format(user_name))
         connection.commit()
         return True
     else:
@@ -61,9 +61,10 @@ def log_in(user_name,password):
     cursor.close()
     connection.close()
 
-def create_(new_user,new_password,new_fund):
+def create_():
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
     cursor = connection.cursor()
+    (new_user,new_password,new_funds) = view.create_menu()
     cursor.execute(
         """INSERT INTO user(
             username,
@@ -73,7 +74,7 @@ def create_(new_user,new_password,new_fund):
             "{}",
             "{}",
             {}
-        );""".format(new_user, new_password, new_fund)
+        );""".format(new_user, new_password, new_funds)
     )
     connection.commit()
     cursor.close()
