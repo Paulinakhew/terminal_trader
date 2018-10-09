@@ -5,6 +5,7 @@ import model as model
 import view
 import os
 import sqlite3
+import time
 #TODO: break upon typing any key
 #for game servers, you want an infinite loop or else it will crash
 
@@ -31,28 +32,15 @@ def game_loop():
                 if has_account:
                     break
                 else:
-                    print('WRONG LOGIN INFORMATION. TRY AGAIN')
-                    import time
+                    print("You have entered the wrong login information. \nPlease try again.")
                     time.sleep(3)
             elif user_choice in exit_:
                 condition = False
                 m.log_out()
-                os.system('clear')
+                view.clear_screen()
                 break
             elif user_choice in create_:
-                (new_user,new_password,new_funds) = view.create_menu()
-                newuser = new_user,new_password,new_funds
-                cursor.execute(
-                    """INSERT INTO user(
-                        username,
-                        password,
-                        current_balance
-                    ) VALUES(?,?,?
-                    )""", newuser
-                )
-                connection.commit()
-                cursor.close()
-                connection.close()
+                model.create_()
                 print("You have signed up!")
                 import time
                 time.sleep(3)
@@ -74,6 +62,7 @@ def game_loop():
                             +transactions  \
                             +exit_inputs
         user_input = view.main_menu()
+        user_input = user_input.lower()
         if user_input in acceptable_inputs:
             if user_input in buy_inputs:
                 (ticker_symbol, trade_volume) = view.buy_menu()
@@ -131,6 +120,8 @@ def game_loop():
                 print("All of your previous transactions: \n{}".format(transactions))
             elif user_input in exit_inputs:
                 view.clear_screen()
+                condition = False
+                m.log_out()
                 break
             else:
                 print("Error.")
