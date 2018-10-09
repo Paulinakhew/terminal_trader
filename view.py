@@ -58,3 +58,6 @@ def sell_menu():
     x = input('Ticker Symbol: ')
     y = float(input('Trade Volume: '))
     return x, y
+    
+def clear_screen():
+    os.system("clear")
