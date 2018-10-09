@@ -22,7 +22,8 @@ def holdings():
     query = "SELECT ticker_symbol, num_shares FROM holdings where username='{}'".format(username)
     cursor.execute(query)
     holdings = cursor.fetchall()
-    return holdings
+    df = pd.read_sql_query(query, connection)
+    return df
 
 def funds():
     user_name = current_user()
