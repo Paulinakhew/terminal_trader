@@ -34,7 +34,7 @@ def head():
 
 def main_menu():
     head()
-    print('[b] Buy\n[s] Sell\n[l] Lookup\n[q] Quote\n[f] Funds\n[h] Holdings\n[e] Exit\n')
+    print('[b] Buy\n[s] Sell\n[l] Lookup\n[q] Quote\n[f] Funds\n[h] Holdings\n[t] Transactions\n[e] Exit\n')
     return input(">MAIN> ")
 
 def buy_menu():
@@ -58,6 +58,6 @@ def sell_menu():
     x = input('Ticker Symbol: ')
     y = float(input('Trade Volume: '))
     return x, y
-    
+
 def clear_screen():
     os.system("clear")
