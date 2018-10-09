@@ -4,7 +4,6 @@ import os
 
 def log_or_sign():
     os.system('clear')
-#    os.system('cowsay "Welcome to Terminal Trader.\n" | lolcat')
     os.system('figlet Terminal Trader | lolcat -a -d 2')
     print('[l] Log in\n[c] Create a new account\n[e] Exit\n')
     return input(">MAIN> ")
@@ -24,13 +23,7 @@ def create_menu():
 
 def head():
     os.system('clear')
-#    os.system('cowsay -d "$(fortune) \n Terminal Trader"\n')
-#    os.system('fortune -a | fmt -80 -s | $(shuf -n 1 -e cowsay cowthink) -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay
-#-l | tail -n +2)) -n')
-#    os.system('cowsay -f vader "$(fortune) \n Terminal Trader"\n')
-#    os.system('"$(fortune) \n " "Terminal Trader"\n cowsay | lolcat')
     os.system('cowsay -f vader "Terminal Trader\n" | lolcat')
-#    os.system('cowsay -c tux "$(fortune -o) \n Terminal Trader"\n')
 
 def main_menu():
     head()
