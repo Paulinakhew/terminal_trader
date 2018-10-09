@@ -19,11 +19,18 @@ def holdings():
     username = current_user()
     connection = sqlite3.connect('trade_information.db', check_same_thread=False)
     cursor = connection.cursor()
-    query = "SELECT ticker_symbol, num_shares FROM holdings where username='{}'".format(username)
-    cursor.execute(query)
-    holdings = cursor.fetchall()
+    query = "SELECT ticker_symbol, num_shares FROM holdings WHERE username='{}';".format(username)
     df = pd.read_sql_query(query, connection)
     return df
+
+def transactions():
+    username = current_user()
+    connection = sqlite3.connect('trade_information.db', check_same_thread=False)
+    cursor = connection.cursor()
+    query = "SELECT ticker_symbol, num_shares,last_price FROM transactions WHERE owner_username='{}';".format(username)
+    df = pd.read_sql_query(query, connection)
+    return df
+    
 
 def funds():
     user_name = current_user()
