@@ -63,6 +63,7 @@ def game_loop():
         quote_inputs = ['q', 'quote']
         funds = ['f', 'funds']
         holdings = ['h', 'holdings']
+        transactions = ['t', 'transactions']
         exit_inputs = ['e', 'exit']
         acceptable_inputs = buy_inputs     \
                             +sell_inputs   \
@@ -70,6 +71,7 @@ def game_loop():
                             +quote_inputs  \
                             +funds         \
                             +holdings      \
+                            +transactions  \
                             +exit_inputs
         user_input = view.main_menu()
         if user_input in acceptable_inputs:
@@ -123,6 +125,10 @@ def game_loop():
                 view.clear_screen()
                 holdings = m.holdings()
                 print("Your current holdings: \n{}".format(holdings))
+            elif user_input in transactions:
+                view.clear_screen()
+                transactions = m.transactions()
+                print("All of your previous transactions: \n{}".format(transactions))
             elif user_input in exit_inputs:
                 view.clear_screen()
                 break
