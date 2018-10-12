@@ -10,6 +10,8 @@ import time
 connection = sqlite3.connect('trade_information.db',check_same_thread=False)
 cursor = connection.cursor()
 
+#TODO: make the current funds correct to two decimal places
+
 def game_loop():
     current_username = ''
     condition = True
@@ -42,7 +44,7 @@ def game_loop():
                 print("You have signed up!")
                 import time
                 time.sleep(3)
-    while condition:
+    while condition: #while true, the loop continues
         buy_inputs = ['b', 'buy']
         sell_inputs = ['s', 'sell']
         lookup_inputs = ['l', 'lookup']
@@ -65,7 +67,7 @@ def game_loop():
             if user_input in buy_inputs:
                 (ticker_symbol, trade_volume) = view.buy_menu()
                 confirmation_message, return_list = model.buy(current_username, ticker_symbol, trade_volume)
-                if confirmation_message == True:
+                if confirmation_message == True: #if the transaction cost is less than the current balance
                     yes = ['y', 'yes']
                     no = ['n', 'no']
                     choice = input("You have enough money. Would you like to buy this stock?\n[y] Yes\n[n] No\n")
@@ -78,7 +80,7 @@ def game_loop():
                     print("You do not have enough money to buy this stock.")
             elif user_input in sell_inputs:
                 (ticker_symbol, trade_volume) = view.sell_menu()
-                confirmation_message, return_list = model.sell(current_username, ticker_symbol, trade_volume)#TODO
+                confirmation_message, return_list = model.sell(current_username, ticker_symbol, trade_volume)
                 if confirmation_message == True:
                     yes = ['y', 'yes']
                     no = ['n', 'no']
@@ -93,9 +95,9 @@ def game_loop():
             elif user_input in lookup_inputs:
                 company_name = view.lookup_menu()
                 ticker_symbol = model.lookup_ticker_symbol(company_name)
-                if len(ticker_symbol) <=6: 
+                if len(ticker_symbol) <=6: #if it returns an actual ticker symbol instead of the error message
                     print("The ticker symbol for {} is {}.".format(company_name, ticker_symbol))
-                else:
+                else: #error message
                     print("The ticker symbol for the company you searched cannot be found. \nPlease try again.")
             elif user_input in quote_inputs:
                 ticker_symbol = view.quote_menu()
