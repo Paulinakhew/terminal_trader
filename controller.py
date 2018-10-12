@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
 import model as m
-import model as model
+import model
 import view
 import os
 import sqlite3
 import time
-#TODO: break upon typing any key
-#for game servers, you want an infinite loop or else it will crash
 
 connection = sqlite3.connect('trade_information.db',check_same_thread=False)
 cursor = connection.cursor()
@@ -129,7 +127,6 @@ def game_loop():
             print("Error.")
         model.update_holdings()
         input("\nPress enter to continue. ")
-
 
 if __name__ == '__main__':
     game_loop()

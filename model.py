@@ -1,12 +1,10 @@
-#!/usr/bin/env
+#!/usr/bin/env python3 
 
 import json
 import sqlite3
 import requests
 import pandas as pd
 import view
-
-#TODO: create a function where you can see holdings and transactiona
 
 def current_user():
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
@@ -31,7 +29,6 @@ def transactions():
     query = "SELECT ticker_symbol, num_shares,last_price FROM transactions WHERE owner_username='{}';".format(username)
     df = pd.read_sql_query(query, connection)
     return df
-    
 
 def funds():
     user_name = current_user()
@@ -194,16 +191,14 @@ def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_bal
     trade_volume = return_list[3]
     left_over = return_list[4]
     ticker_symbol = return_list[6]
-    #update users(current_balance), stocks, holdings.
-    #users
-        #updating the balance of the user
+    #updating the balance of the user
     cursor.execute("""
         UPDATE user
         SET current_balance = {}
         WHERE username = '{}';
     """.format(left_over, username)
     )
-    #transactions
+    #undating the user's transactions
     cursor.execute("""
         INSERT INTO transactions(
         ticker_symbol,
