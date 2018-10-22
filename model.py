@@ -101,11 +101,11 @@ def sell(username, ticker_symbol, trade_volume):
     last_price = float(quote_last_price(ticker_symbol))
     brokerage_fee = 6.95 #TODO un-hardcode this value
     current_balance = get_user_balance(username) #TODO un-hardcode this value
-    print("Price", last_price)
-    print("brokerage fee", brokerage_fee)
-    print("current balance", current_balance)
+    print("Last Price:", last_price)
+    print("Brokerage Fee:", brokerage_fee)
+    print("Current Balance:", current_balance)
     transaction_revenue = (trade_volume * last_price) - brokerage_fee
-    print("Total revenue of Transaction:", transaction_revenue)
+    print("Total Revenue of Transaction:", transaction_revenue)
     agg_balance = float(current_balance) + float(transaction_revenue)
     print("\nExpected user balance after transaction:", agg_balance)
     return_list = (last_price, brokerage_fee, current_balance, trade_volume,agg_balance,username,ticker_symbol,current_number_shares)
@@ -163,12 +163,10 @@ def buy(username, ticker_symbol, trade_volume):
     brokerage_fee = 6.95 #TODO un-hardcode this value
     username = current_user()
     current_balance = get_user_balance(username)
-    print("last price", last_price)
-    print("brokerage fee", brokerage_fee)
-    print("current balance", current_balance)
+    print("Last price:", last_price)
+    print("Brokerage fee:", brokerage_fee)
+    print("Current balance:", current_balance)
     transaction_cost = (trade_volume * last_price) + brokerage_fee
-    print("transaction", transaction_cost)
-    print("current bal", current_balance)
     print("Total cost of Transaction:", transaction_cost)
     left_over = float(current_balance) - float(transaction_cost)
     print("\nExpected user balance after transaction:", left_over)
