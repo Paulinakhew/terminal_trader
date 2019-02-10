@@ -1,6 +1,6 @@
 # terminal_trader
 This project was started at Byte Academy so that I could learn how to implement modularization, learn about JSON, and create and interact with SQLite3 databases. This application consolidates data from Nasdaq, allowing the user to search up the ticker symbol and price of any stock in real time. You can buy and sell any number of stocks and see your past transactions. 
-The goal is to end up with a large profit. Good luck! :money_mouth_face:
+The goal is to end up with a large profit :money_mouth_face: good luck!
 
 ## How to play
 To run Terminal Trader on your computer, download all the files. Run schema.py and then seed.py to create a sqlite3 database to store your transactions. In your terminal, type in 'python3 controller.py' and then create your own account.
