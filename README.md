@@ -3,7 +3,7 @@ This project was started at Byte Academy so that I could learn how to implement 
 The goal is to end up with a large profit :money_mouth_face: good luck!
 
 ## How to play
-To run Terminal Trader on your computer, download all the files. Run schema.py and then seed.py to create a sqlite3 database to store your transactions. In your terminal, type in 'python3 controller.py' and then create your own account.
+To run Terminal Trader on your computer, download all the files. Run `python3 schema.py` and then `python3 seed.py` to create a sqlite3 database to store your transactions. In your terminal, type in `python3 controller.py` and then create your own account.
 
 ### To all users
 Have fun! :smile: Feel free to create any issues and pull requests for changes that you want to see in the future of this application. 
