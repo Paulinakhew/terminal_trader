@@ -1,6 +1,3 @@
-json
 pandas
-sqlite3
 requests
-os
-time
+pyfiglet
