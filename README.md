@@ -2,12 +2,22 @@
 This project was started at Byte Academy so that I could learn how to implement modularization, learn about JSON, and create and interact with SQLite3 databases. This application consolidates data from Nasdaq, allowing the user to search up the ticker symbol and price of any stock in real time. You can buy and sell any number of stocks and see your past transactions. 
 The goal is to end up with a large profit :money_mouth_face: good luck!
 
-## Setup for MacOS Users
+## Setup
 - Clone or download the repository.
 - Download all the necessary packages:
+
+* **MacOS Users**
 ```ShellSession
 $ pip3 install -r pip_requirements.txt
 $ xargs brew install < brew_requirements.txt
+```
+
+* **Linux Users**
+```ShellSession
+$ sudo apt-get install cowsay
+$ sudo apt-get install figlet
+$ gem install lolcat
+$ pip install -r pip_requirements.txt
 ```
 
 - Create the sqlite3 database:
