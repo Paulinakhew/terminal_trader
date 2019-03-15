@@ -5,7 +5,6 @@ import model
 import view
 import os
 import sqlite3
-import time
 
 connection = sqlite3.connect('trade_information.db',check_same_thread=False)
 cursor = connection.cursor()
@@ -32,8 +31,7 @@ def game_loop():
                 if has_account:
                     break
                 else:
-                    print("You have entered the wrong login information. \nPlease try again.")
-                    time.sleep(3)
+                    input("You have entered the wrong login information. \nPlease try again. Press enter to continue. ")
             elif user_choice in exit_:
                 condition = False
                 m.log_out()
@@ -42,8 +40,7 @@ def game_loop():
             elif user_choice in create_:
                 model.create_()
                 print("You have signed up!")
-                import time
-                time.sleep(3)
+                input("Press enter to continue. ")
     while condition: #while true, the loop continues
         buy_inputs = ['b', 'buy']
         sell_inputs = ['s', 'sell']
