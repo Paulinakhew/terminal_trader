@@ -40,3 +40,5 @@ This is what the login and sign up menu looks like.
 This is the main menu where you can buy and sell stocks. 
 ![Login/sign up menu](static/main_menu.png?raw=true "Main menu")
 
+This is what the user sees when purchasing stocks. 
+![Buying stocks](static/buying_stock.png?raw=true "Buying stocks")
