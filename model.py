@@ -3,8 +3,9 @@
 import json
 import sqlite3
 import requests
-import pandas as pd
 import view
+import datetime
+import pandas as pd
 
 def current_user():
     connection = sqlite3.connect('trade_information.db',check_same_thread=False)
@@ -26,7 +27,7 @@ def transactions():
     username = current_user()
     connection = sqlite3.connect('trade_information.db', check_same_thread=False)
     cursor = connection.cursor()
-    query = "SELECT ticker_symbol, num_shares,last_price FROM transactions WHERE owner_username='{}';".format(username)
+    query = "SELECT ticker_symbol, num_shares,last_price,date FROM transactions WHERE owner_username='{}';".format(username)
     df = pd.read_sql_query(query, connection)
     return df
 
@@ -126,6 +127,9 @@ def sell_db(return_list):
     username = current_user()
     ticker_symbol = return_list[6]
     current_number_shares = return_list[7]
+    now = datetime.datetime.now()
+    date = now.strftime("%Y-%m-%d %I:%M %p")
+
     cursor.execute("""
         UPDATE user
         SET current_balance = {}
@@ -137,10 +141,11 @@ def sell_db(return_list):
         ticker_symbol,
         num_shares,
         owner_username,
-        last_price
+        last_price,
+        date
         ) VALUES(
-        '{}',{},'{}',{}
-        );""".format(ticker_symbol,trade_volume*-1,username,last_price)
+        '{}',{},'{}',{},'{}'
+        );""".format(ticker_symbol,trade_volume*-1,username,last_price,date)
     )
     if current_number_shares >= trade_volume: #if user isn't selling all shares of a specific company
         tot_shares = float(current_number_shares)-float(trade_volume)
@@ -189,6 +194,8 @@ def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_bal
     trade_volume = return_list[3]
     left_over = return_list[4]
     ticker_symbol = return_list[6]
+    now = datetime.datetime.now()
+    date = now.strftime("%Y-%m-%d %I:%M %p")
     #updating the balance of the user
     cursor.execute("""
         UPDATE user
@@ -202,10 +209,11 @@ def buy_db(return_list): # return_list = (last_price, brokerage_fee, current_bal
         ticker_symbol,
         num_shares,
         owner_username,
-        last_price
+        last_price,
+        date
         ) VALUES(
-        '{}',{},'{}',{}
-        );""".format(ticker_symbol,trade_volume,username,last_price)
+        '{}',{},'{}',{},'{}'
+        );""".format(ticker_symbol,trade_volume,username,last_price,date)
     )
     query = 'SELECT count(*), num_shares FROM holdings WHERE username = "{}" AND ticker_symbol = "{}"'.format(username, ticker_symbol)
     cursor.execute(query)
@@ -322,7 +330,7 @@ def display_user_transactions():
     username=current_user()
     connection = sqlite3.connect("trade_information.db", check_same_thread=False)
     cursor = connection.cursor()
-    cursor.execute("SELECT ticker_symbol,num_shares,last_price FROM transactions WHERE owner_username='{}';".format(username))
+    cursor.execute("SELECT ticker_symbol,num_shares,last_price,date FROM transactions WHERE owner_username='{}';".format(username))
     user_transactions = cursor.fetchall()
     cursor.close()
     connection.close()
